@@ -6,6 +6,7 @@ public class BallPrefabHolderScript : MonoBehaviour {
     public GameObject bat;
 
     bool hasBeenHit = false;
+    bool firstBatHit = false;
 
 	// Use this for initialization
 	void Start () {
@@ -23,15 +24,14 @@ public class BallPrefabHolderScript : MonoBehaviour {
 
 
 
-
-
-
 	void OnCollisionEnter(Collision collision)
 	{
-        if (collision.gameObject.tag == "Bat")
+        if (collision.gameObject.tag == "Bat" && firstBatHit == false)
         {
+            firstBatHit = true;
             hasBeenHit = true;
             UIScript.NumberOfHits++;
+            Debug.Log(UIScript.NumberOfHits);
             StartCoroutine("DestroyBallScript");
             
         }
@@ -47,7 +47,7 @@ public class BallPrefabHolderScript : MonoBehaviour {
             
                 UIScript.NumberOfFairHits++;
                 Destroy(gameObject.GetComponent<Collider>());
-                Debug.Log("I've entered a trigger with the \"new Fair\" tag");
+                //Debug.Log("I've entered a trigger with the \"new Fair\" tag");
             
         }
         
