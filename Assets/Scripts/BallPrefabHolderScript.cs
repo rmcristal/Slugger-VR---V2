@@ -24,6 +24,8 @@ public class BallPrefabHolderScript : MonoBehaviour {
 
 
 
+
+
 	void OnCollisionEnter(Collision collision)
 	{
         if (collision.gameObject.tag == "Bat")
@@ -37,13 +39,15 @@ public class BallPrefabHolderScript : MonoBehaviour {
 	}
 
 
+
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "NewFair" && hasBeenHit)
+        if(other.gameObject.tag == "NewFair" && hasBeenHit == true)
         {
-            UIScript.NumberOfFairHits++;
-            Destroy(gameObject.GetComponent<Collider>());
-            Debug.Log("I've entered a trigger with the \"new Fair\" tag");
+            
+                UIScript.NumberOfFairHits++;
+                Destroy(gameObject.GetComponent<Collider>());
+                Debug.Log("I've entered a trigger with the \"new Fair\" tag");
             
         }
         
