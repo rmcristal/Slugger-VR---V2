@@ -14,12 +14,12 @@ public class NewPitchersScript : MonoBehaviour {
     private string perfectPitch = "Perfect"; //Can choose from "Perfect", "No", or "Curve Ball"
     public int regularPitchSpeed = 1440;
     private float amountOfCurve = 15f;
-    private Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
-    public GameObject Box1;
-    public GameObject Box2;
-    private float magnitude;
+    public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
+    public int test;
+	public float test2;
     
-    
+   
+
 
 
 
@@ -30,8 +30,6 @@ public class NewPitchersScript : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        magnitude = (Box1.transform.position - Box2.transform.position).magnitude;
-        Debug.Log(magnitude);
         m_PitcherPlayer.GetComponent<Animation>()["idle"].wrapMode = WrapMode.Loop;
         m_PitcherPlayer.GetComponent<Animation>().Play("idle");
         animationWaitTime = m_PitcherPlayer.GetComponent<Animation>()["shoot"].length;

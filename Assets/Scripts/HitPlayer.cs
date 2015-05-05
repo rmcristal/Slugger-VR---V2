@@ -43,10 +43,10 @@ public class HitPlayer : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.F))
             {
                
-                m_HitPlayer.GetComponent<Animation>().Play("NewBunt");
+                //m_HitPlayer.GetComponent<Animation>().Play("NewBunt");
+                StartCoroutine("PlayAni", "NewBunt");
                 
             }
-
 
 
         }

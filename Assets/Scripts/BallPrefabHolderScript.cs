@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BallPrefabHolderScript : MonoBehaviour {
 
-    public GameObject bat;
+    //public GameObject bat;
 
     bool hasBeenHit = false;
     bool firstBatHit = false;
@@ -12,7 +12,6 @@ public class BallPrefabHolderScript : MonoBehaviour {
 	void Start () {
 
         
-     
 	}
 	
 	// Update is called once per frame
@@ -34,6 +33,7 @@ public class BallPrefabHolderScript : MonoBehaviour {
             Debug.Log(UIScript.NumberOfHits);
             StartCoroutine("DestroyBallScript");
             
+            
         }
 
 	}
@@ -45,9 +45,10 @@ public class BallPrefabHolderScript : MonoBehaviour {
         if(other.gameObject.tag == "NewFair" && hasBeenHit == true)
         {
             
-                UIScript.NumberOfFairHits++;
-                Destroy(gameObject.GetComponent<Collider>());
-                //Debug.Log("I've entered a trigger with the \"new Fair\" tag");
+            UIScript.NumberOfFairHits++;
+			hasBeenHit = false;
+            //Destroy(gameObject.GetComponent<Collider>());
+            //Debug.Log("I've entered a trigger with the \"new Fair\" tag");
             
         }
         
