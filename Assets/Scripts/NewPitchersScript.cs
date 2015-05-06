@@ -15,8 +15,7 @@ public class NewPitchersScript : MonoBehaviour {
     public int regularPitchSpeed = 1440;
     private float amountOfCurve = 15f;
     public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
-    public int test;
-	public float test2;
+    
     
    
 
