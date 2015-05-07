@@ -40,7 +40,7 @@ public class NewPitchersScript : MonoBehaviour {
     void Update()
     {
         randomWait = Random.Range(1f, 1.5f);
-        if (started == false && Input.GetKeyDown(KeyCode.S))
+        if (started == false && Input.GetButtonDown("Button Y"))
         {
             if (bEnd)
             {
