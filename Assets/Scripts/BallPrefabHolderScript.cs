@@ -54,13 +54,19 @@ public class BallPrefabHolderScript : MonoBehaviour {
         
         if(other.gameObject.tag == "FoulBall")
         {
-            Destroy(gameObject);
+            StartCoroutine("DestroyFoulBallScript");
         }
     }
 
     IEnumerator DestroyBallScript()
     {
         yield return new WaitForSeconds(7);
+        Destroy(gameObject);
+    }
+
+    IEnumerator DestroyFoulBallScript()
+    {
+        yield return new WaitForSeconds(4);
         Destroy(gameObject);
     }
 }

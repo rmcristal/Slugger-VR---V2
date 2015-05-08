@@ -17,6 +17,7 @@ public class NewPitchersScript : MonoBehaviour {
     public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
     
     
+    
    
 
 
@@ -40,16 +41,31 @@ public class NewPitchersScript : MonoBehaviour {
     void Update()
     {
         randomWait = Random.Range(1f, 1.5f);
-        if (started == false && Input.GetButtonDown("Button Y"))
+        if (UIScript.MainCameraPresent == false)
         {
-            if (bEnd)
+            if (started == false && Input.GetButtonDown("Button Y"))
             {
-                bEnd = false;
-                StartCoroutine("PlayAni", "shoot");
-                
+                if (bEnd)
+                {
+                    bEnd = false;
+                    StartCoroutine("PlayAni", "shoot");
+
+                }
+                started = true;
             }
-            //StartCoroutine("Pitch");
-            started = true;
+        }
+        else
+        {
+            if (started == false && Input.GetKeyDown(KeyCode.S))
+            {
+                if (bEnd)
+                {
+                    bEnd = false;
+                    StartCoroutine("PlayAni", "shoot");
+
+                }
+                started = true;
+            }
         }
     }
 

@@ -12,8 +12,22 @@ public class UIScript : MonoBehaviour {
     public static int swingCountRemaining;
     private float hitsPerSwingBattingAvg;
     public Text OverallStats;
-    public Text TooFastOrTooSlow;
+    private static bool mainCameraPresent;
+    public GameObject mainCamera;
 
+    public static bool MainCameraPresent
+    {
+        get
+        {
+            return mainCameraPresent;
+        }
+        set
+        {
+            mainCameraPresent = value;
+        }
+    }
+    
+    
     public static int NumberOfHits
     {
         get
@@ -39,11 +53,19 @@ public class UIScript : MonoBehaviour {
         }
     }
 
-	// Use this for initialization
-	void Start () {
-	
+ 
+    // Use this for initialization
+	void Start () 
+    {
+        
+        if (mainCamera.gameObject.activeSelf == false)
+            MainCameraPresent = false;
+        else
+            MainCameraPresent = true;
 	}
 	
+
+
 
 	// Update is called once per frame
 	void Update () 

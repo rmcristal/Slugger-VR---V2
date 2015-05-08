@@ -10,7 +10,6 @@ public class HitPlayer : MonoBehaviour {
 	bool bEnd=true;
     public AudioClip hit;
     private int swingCountRemaining = 20;
-    //public Text UIText;
     private int numberOfFairHitsLocal;
 
 
@@ -27,26 +26,39 @@ public class HitPlayer : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-        //numberOfFairHitsLocal = SwingingBatScript.NumberOfFairHits;
-        //UIText.text = ("Swings Remaining: " + swingCountRemaining + "\nNumber of Hits: " + numberOfFairHitsLocal);
         if (bEnd)
         {
-            if (Input.GetButtonDown("Button A"))
+            if (UIScript.MainCameraPresent == false)
             {
-                bEnd = false;
-                StartCoroutine("PlayAni", "hit - Trying to Make the Swing Faster");
-                //swingCountRemaining -= 1;
-                UIScript.numberOfSwingsTaken++;
-                //UIText.text = ("Swings Remaining: " + swingCountRemaining + "\nNumber of Hits: " + numberOfFairHitsLocal);
-                return;
+                if (Input.GetButtonDown("Button A"))
+                {
+                    bEnd = false;
+                    StartCoroutine("PlayAni", "hit - Trying to Make the Swing Faster");
+                    //swingCountRemaining -= 1;
+                    UIScript.numberOfSwingsTaken++;
+                    //UIText.text = ("Swings Remaining: " + swingCountRemaining + "\nNumber of Hits: " + numberOfFairHitsLocal);
+                    return;
+                }
             }
-            if (Input.GetKeyDown(KeyCode.F))
+            else
             {
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    bEnd = false;
+                    StartCoroutine("PlayAni", "hit - Trying to Make the Swing Faster");
+                    //swingCountRemaining -= 1;
+                    UIScript.numberOfSwingsTaken++;
+                    //UIText.text = ("Swings Remaining: " + swingCountRemaining + "\nNumber of Hits: " + numberOfFairHitsLocal);
+                    return;
+                }
+            }
+            //if (Input.GetKeyDown(KeyCode.F))
+            //{
                
-                //m_HitPlayer.GetComponent<Animation>().Play("NewBunt");
-                StartCoroutine("PlayAni", "NewBunt");
+            //    //m_HitPlayer.GetComponent<Animation>().Play("NewBunt");
+            //    StartCoroutine("PlayAni", "NewBunt");
                 
-            }
+            //}
 
 
         }
