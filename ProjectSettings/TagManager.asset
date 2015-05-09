@@ -7,6 +7,9 @@ TagManager:
   - NewFair
   - Bat
   - FoulBall
+  - FairBall
+  - Strike
+  - CrossedThePlate
   layers:
   - Default
   - TransparentFX

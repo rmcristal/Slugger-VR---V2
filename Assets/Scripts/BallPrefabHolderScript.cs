@@ -7,6 +7,8 @@ public class BallPrefabHolderScript : MonoBehaviour {
 
     bool hasBeenHit = false;
     bool firstBatHit = false;
+    private bool strike = false;
+    private bool ball = false;
 
 	// Use this for initialization
 	void Start () {
@@ -55,6 +57,16 @@ public class BallPrefabHolderScript : MonoBehaviour {
         if(other.gameObject.tag == "FoulBall")
         {
             StartCoroutine("DestroyFoulBallScript");
+        }
+        if (other.gameObject.tag == "Strike")
+        {
+            strike = true;
+            Debug.Log("Strike");
+        }
+        if (other.gameObject.tag == "CrossedThePlate" && strike == false)
+        {
+            ball = true;
+            Debug.Log("Ball");
         }
     }
 
