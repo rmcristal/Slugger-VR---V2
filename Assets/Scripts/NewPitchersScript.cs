@@ -17,6 +17,12 @@ public class NewPitchersScript : MonoBehaviour {
     public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
     
     
+
+
+
+
+
+
     
    
 
@@ -82,11 +88,11 @@ public class NewPitchersScript : MonoBehaviour {
             {
                 if (pitchRandomizer == 2)
                 {
-                    pitchSpeed = 1200;
+                    pitchSpeed = Random.Range(880,920);
                 }
                 else if (pitchRandomizer == 4)
                 {
-                    pitchSpeed = 1700;
+                    pitchSpeed = Random.Range(1100,1200);
                 }
                 else pitchSpeed = regularPitchSpeed;
             }

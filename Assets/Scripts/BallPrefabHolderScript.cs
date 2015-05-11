@@ -34,8 +34,10 @@ public class BallPrefabHolderScript : MonoBehaviour {
             UIScript.NumberOfHits++;
             Debug.Log(UIScript.NumberOfHits);
             StartCoroutine("DestroyBallScript");
-            
-            
+        }
+        if(collision.gameObject.tag == "Ground" && firstBatHit == false)
+        {
+            Destroy(GetComponent<Collider>());
         }
 
 	}
