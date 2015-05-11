@@ -14,6 +14,7 @@ public class UIScript : MonoBehaviour {
     public Text OverallStats;
     private static bool mainCameraPresent;
     public GameObject mainCamera;
+    private bool hasPlayerPressedY = false;
 
     public static bool MainCameraPresent
     {
@@ -79,7 +80,33 @@ public class UIScript : MonoBehaviour {
         
         else
             hitsPerSwingBattingAvg = 0;
-        OverallStats.text = ("Swings Remaining: " + swingCountRemaining + "\nTotal Swings Taken: " + numberOfSwingsTaken + "\nNumber of Hits: " + NumberOfFairHits + "\nNumber of Foul Balls: " + numberOfFoulHits + "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3"));
+        if (UIScript.MainCameraPresent == false)
+        {
+            if (hasPlayerPressedY == false)
+            {
+                OverallStats.text = ("Press Y to start\nPress A to swing");
+                if (Input.GetButtonDown("Button Y"))
+                    hasPlayerPressedY = true;
+            }
+            else
+            {
+                OverallStats.text = ("Swings Remaining: " + swingCountRemaining + "\nTotal Swings Taken: " + numberOfSwingsTaken + "\nNumber of Hits: " + NumberOfFairHits + "\nNumber of Foul Balls: " + numberOfFoulHits + "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3"));
+            }
+        }
+        else
+        {
+            if (hasPlayerPressedY == false)
+            {
+                OverallStats.text = ("Press S to start\nPress B to swing");
+                if (Input.GetKeyDown(KeyCode.S))
+                    hasPlayerPressedY = true;
+            }
+            else
+            {
+                OverallStats.text = ("Swings Remaining: " + swingCountRemaining + "\nTotal Swings Taken: " + numberOfSwingsTaken + "\nNumber of Hits: " + NumberOfFairHits + "\nNumber of Foul Balls: " + numberOfFoulHits + "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3"));
+            }
+        }
+        
 
 	}
 }
