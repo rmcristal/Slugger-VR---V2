@@ -15,6 +15,12 @@ public class UIScript : MonoBehaviour {
     private static bool mainCameraPresent;
     public GameObject mainCamera;
     private bool hasPlayerPressedY = false;
+    private bool mainMenuEnabled = false;
+    public GameObject mainMenuCanvasHolder;
+    public Canvas mainMenuCanvasHolder2;
+
+
+
 
     public static bool MainCameraPresent
     {
@@ -58,13 +64,18 @@ public class UIScript : MonoBehaviour {
     // Use this for initialization
 	void Start () 
     {
-        
+        //mainMenuCanvasHolder = mainMenuCanvasHolder.GetComponentInChildren<GameObject>();
+        //mainMenuCanvasHolder.GetComponentInChildren<GameObject>().SetActive(false);
+        mainMenuCanvasHolder2 = mainMenuCanvasHolder2.GetComponent<Canvas>();
+        mainMenuCanvasHolder2.enabled = false;
+        //mainMenuCanvasHolder.GetComponentInChildren<Canvas>().enabled = false;
         if (mainCamera.gameObject.activeSelf == false)
             MainCameraPresent = false;
         else
             MainCameraPresent = true;
 	}
 	
+
 
 
 
@@ -82,6 +93,19 @@ public class UIScript : MonoBehaviour {
             hitsPerSwingBattingAvg = 0;
         if (UIScript.MainCameraPresent == false)
         {
+            if (mainMenuEnabled == false && Input.GetButtonDown("Select"))
+            {
+                mainMenuEnabled = true;
+                mainMenuCanvasHolder2.enabled = true;
+                //mainMenuCanvasHolder.SetActive(true);
+            }
+            if (mainMenuEnabled == true && Input.GetButtonDown("Select"))
+            {
+                mainMenuEnabled = false;
+                mainMenuCanvasHolder2.enabled = false;
+                //mainMenuCanvasHolder.SetActive(false);
+            }
+
             if (hasPlayerPressedY == false)
             {
                 OverallStats.text = ("Press Y to start\nPress A to swing");
@@ -95,6 +119,18 @@ public class UIScript : MonoBehaviour {
         }
         else
         {
+            if (mainMenuCanvasHolder2.enabled == false && Input.GetKey(KeyCode.M))
+            {
+                mainMenuEnabled = true;
+                mainMenuCanvasHolder2.enabled = true;
+                //mainMenuCanvasHolder.SetActive(true);
+            }
+            if (mainMenuCanvasHolder2.enabled == true && Input.GetKey(KeyCode.M))
+            {
+                mainMenuEnabled = false;
+                mainMenuCanvasHolder2.enabled = false;
+                //mainMenuCanvasHolder.SetActive(false);
+            }
             if (hasPlayerPressedY == false)
             {
                 OverallStats.text = ("Press S to start\nPress B to swing");
@@ -106,7 +142,6 @@ public class UIScript : MonoBehaviour {
                 OverallStats.text = ("Swings Remaining: " + swingCountRemaining + "\nTotal Swings Taken: " + numberOfSwingsTaken + "\nNumber of Hits: " + NumberOfFairHits + "\nNumber of Foul Balls: " + numberOfFoulHits + "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3"));
             }
         }
-        
 
 	}
 }

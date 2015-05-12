@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2957a5b4e2700424da53b7db0b110e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireWorksPrefab: {fileID: 19899984, guid: f91af2ab0621e1f4b8a9c966b8c43cae, type: 2}
 --- !u!114 &11435610
 MonoBehaviour:
   m_ObjectHideFlags: 0

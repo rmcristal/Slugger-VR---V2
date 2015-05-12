@@ -9,6 +9,9 @@ public class BallPrefabHolderScript : MonoBehaviour {
     bool firstBatHit = false;
     private bool strike = false;
     private bool ball = false;
+    public ParticleSystem fireWorksPrefab;
+    private ParticleSystem clone;
+    private ParticleSystem clone2;
 
 	// Use this for initialization
 	void Start () {
@@ -52,8 +55,7 @@ public class BallPrefabHolderScript : MonoBehaviour {
             UIScript.NumberOfFairHits++;
 			hasBeenHit = false;
             //Destroy(gameObject.GetComponent<Collider>());
-            //Debug.Log("I've entered a trigger with the \"new Fair\" tag");
-            
+            //Debug.Log("I've entered a trigger with the \"new Fair\" tag");   
         }
         
         if(other.gameObject.tag == "FoulBall")
@@ -69,6 +71,13 @@ public class BallPrefabHolderScript : MonoBehaviour {
         {
             ball = true;
             Debug.Log("Ball");
+        }
+        if(other.gameObject.tag == "Homerun")
+        {
+            clone = Instantiate(fireWorksPrefab, new Vector3(14.5f, 4.3f, 18.5f), Quaternion.Euler(-90f,0f,0f)) as ParticleSystem;
+            clone2 = Instantiate(fireWorksPrefab, new Vector3(-14.18f, 4.3f, 18.5f), Quaternion.Euler(-90f, 0f, 0f)) as ParticleSystem;
+            Debug.Log("Fireworks should be generated");
+
         }
     }
 

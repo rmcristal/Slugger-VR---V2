@@ -91,14 +91,6 @@ Material:
         second: .5
       data:
         first:
-          name: _SrcBlend
-        second: 1
-      data:
-        first:
-          name: _DstBlend
-        second: 10
-      data:
-        first:
           name: _Stencil
         second: 0
       data:
@@ -121,6 +113,14 @@ Material:
         first:
           name: _ColorMask
         second: 15
+      data:
+        first:
+          name: _SrcBlend
+        second: 1
+      data:
+        first:
+          name: _DstBlend
+        second: 10
       data:
         first:
           name: _Parallax
@@ -169,7 +169,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .933823526, g: .0274654236, b: .0274654236, a: 1}
+        second: {r: .933823526, g: .0274654236, b: .0274654236, a: .450980395}
       data:
         first:
           name: _EmissionColorUI

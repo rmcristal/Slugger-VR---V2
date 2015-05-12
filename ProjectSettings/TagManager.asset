@@ -11,6 +11,7 @@ TagManager:
   - Strike
   - CrossedThePlate
   - Ground
+  - Homerun
   layers:
   - Default
   - TransparentFX

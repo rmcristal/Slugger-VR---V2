@@ -11,7 +11,7 @@ public class NewPitchersScript : MonoBehaviour {
     private float randomWait;
     private float animationWaitTime;
     private int pitchRandomizer;
-    private string perfectPitch = "Perfect"; //Can choose from "Perfect", "No", or "Curve Ball"
+    private string pitchMode = "Perfect"; //Can choose from "Perfect", "No", or "Curve Ball"
     public int regularPitchSpeed = 1440;
     private float amountOfCurve = 15f;
     public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
@@ -46,6 +46,12 @@ public class NewPitchersScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButtonDown("Desktop_Left Trigger"))
+        {
+            pitchMode = "No";
+        }
+        if (Input.GetButtonDown("Desktop_Right Trigger"))
+            pitchMode = "Curve Ball";
         randomWait = Random.Range(1f, 1.5f);
         if (UIScript.MainCameraPresent == false)
         {
@@ -84,7 +90,7 @@ public class NewPitchersScript : MonoBehaviour {
             yield return new WaitForSeconds(1f);
             ballClone = Instantiate(ballPrefab) as Rigidbody;
             pitchRandomizer = Random.Range(1,6);
-            if (perfectPitch == "No")
+            if (pitchMode == "No")
             {
                 if (pitchRandomizer == 2)
                 {
@@ -96,7 +102,7 @@ public class NewPitchersScript : MonoBehaviour {
                 }
                 else pitchSpeed = regularPitchSpeed;
             }
-            else if (perfectPitch == "Curve Ball")
+            else if (pitchMode == "Curve Ball")
             {
                 regularPitchVector3 = new Vector3(.2f, .2f, 1f);
                 pitchSpeed = regularPitchSpeed - 26;
