@@ -15,6 +15,8 @@ public class NewPitchersScript : MonoBehaviour {
     public int regularPitchSpeed = 1440;
     private float amountOfCurve = 15f;
     public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
+    private static int hitsInARow = 0;
+    public static int numberOfHitsInARowToCompleteLevel = 5;
 
 
 
@@ -32,6 +34,18 @@ public class NewPitchersScript : MonoBehaviour {
         }
     }
 
+    
+    public static int HitsInARow
+    {
+        get
+        {
+            return hitsInARow;
+        }
+        set
+        {
+            hitsInARow = value;
+        }
+    }
 
 
     
@@ -101,11 +115,12 @@ public class NewPitchersScript : MonoBehaviour {
 
     IEnumerator PlayAni(string name)
     {
-        while (true)
+        while (HitsInARow < numberOfHitsInARowToCompleteLevel)
         {
             m_PitcherPlayer.GetComponent<Animation>().Play(name);
             yield return new WaitForSeconds(1f);
             ballClone = Instantiate(ballPrefab) as Rigidbody;
+            UIScript.PitchNumer++;
             pitchRandomizer = Random.Range(1,6);
             if (pitchMode == "Balls & Strikes")
             {

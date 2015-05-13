@@ -11,6 +11,7 @@ public class HitPlayer : MonoBehaviour {
     public AudioClip hit;
     private int swingCountRemaining = 20;
     private int numberOfFairHitsLocal;
+    private int tempAdjusterBetweenSwingsAndFairHits;
 
 
 
@@ -36,6 +37,7 @@ public class HitPlayer : MonoBehaviour {
                     StartCoroutine("PlayAni", "hit - Trying to Make the Swing Faster");
                     //swingCountRemaining -= 1;
                     UIScript.numberOfSwingsTaken++;
+                    StartCoroutine("HitsInARowCoroutine");
                     //UIText.text = ("Swings Remaining: " + swingCountRemaining + "\nNumber of Hits: " + numberOfFairHitsLocal);
                     return;
                 }
@@ -48,6 +50,7 @@ public class HitPlayer : MonoBehaviour {
                     StartCoroutine("PlayAni", "hit - Trying to Make the Swing Faster");
                     //swingCountRemaining -= 1;
                     UIScript.numberOfSwingsTaken++;
+                    StartCoroutine("HitsInARowCoroutine");
                     //UIText.text = ("Swings Remaining: " + swingCountRemaining + "\nNumber of Hits: " + numberOfFairHitsLocal);
                     return;
                 }
@@ -82,5 +85,19 @@ public class HitPlayer : MonoBehaviour {
 
     }
 
+    IEnumerator HitsInARowCoroutine()
+   {
+       yield return new WaitForSeconds(.7f);
+        if((UIScript.NumberOfFairHits + tempAdjusterBetweenSwingsAndFairHits) != UIScript.numberOfSwingsTaken)
+        {
+            Debug.Log("The HitsInARowCoroutine in the HitPlayer Script is working");
+            NewPitchersScript.HitsInARow = 0;
+            tempAdjusterBetweenSwingsAndFairHits = UIScript.numberOfSwingsTaken - UIScript.NumberOfFairHits;
+        }
+   }
     
+    
+
 }
+
+

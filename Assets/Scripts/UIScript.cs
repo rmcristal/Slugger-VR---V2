@@ -6,7 +6,7 @@ public class UIScript : MonoBehaviour {
 
     private static int numberOfHits;
     private static int numberOfFairHits;
-    private int numberOfFoulHits;
+    public static int numberOfFoulHits;
     private int totalStartingSwings = 20;
     public static int numberOfSwingsTaken;
     public static int swingCountRemaining;
@@ -18,6 +18,8 @@ public class UIScript : MonoBehaviour {
     private bool mainMenuEnabled = false;
     public GameObject mainMenuCanvasHolder;
     public Canvas mainMenuCanvasHolder2;
+    public Canvas winningTextUI;
+    private static int pitchNumber;
 
 
 
@@ -56,7 +58,22 @@ public class UIScript : MonoBehaviour {
         }
         set
         {
-            numberOfFairHits = value;
+            {
+                numberOfFairHits = value;
+                NewPitchersScript.HitsInARow++;
+            }
+        }
+    }
+
+    public static int PitchNumer
+    {
+        get
+        {
+            return pitchNumber;
+        }
+        set
+        {
+            pitchNumber = value;
         }
     }
 
@@ -83,7 +100,8 @@ public class UIScript : MonoBehaviour {
         //mainMenuCanvasHolder = mainMenuCanvasHolder.GetComponentInChildren<GameObject>();
         //mainMenuCanvasHolder.GetComponentInChildren<GameObject>().SetActive(false);
         mainMenuCanvasHolder2 = mainMenuCanvasHolder2.GetComponent<Canvas>();
-        mainMenuCanvasHolder2.enabled = true;
+        mainMenuCanvasHolder2.enabled = false;
+        winningTextUI.enabled = false;
         //mainMenuCanvasHolder.GetComponentInChildren<Canvas>().enabled = false;
         if (mainCamera.gameObject.activeSelf == false)
             MainCameraPresent = false;
@@ -98,12 +116,15 @@ public class UIScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
+        if(NewPitchersScript.HitsInARow == NewPitchersScript.numberOfHitsInARowToCompleteLevel )
+            winningTextUI.enabled = true;
         swingCountRemaining = totalStartingSwings - numberOfSwingsTaken;
         numberOfFoulHits = NumberOfHits - NumberOfFairHits;
         if (numberOfSwingsTaken != 0)
         {   
             hitsPerSwingBattingAvg = (((float)NumberOfFairHits / (float)numberOfSwingsTaken) * 1000f)/1000f;
         }
+
         
         else
             hitsPerSwingBattingAvg = 0;
@@ -121,7 +142,13 @@ public class UIScript : MonoBehaviour {
             }
             else
             {
-                OverallStats.text = ("Swings Remaining: " + swingCountRemaining + "\nTotal Swings Taken: " + numberOfSwingsTaken + "\nNumber of Hits: " + NumberOfFairHits + "\nNumber of Foul Balls: " + numberOfFoulHits + "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3"));
+                OverallStats.text = (
+                    //"Swings Remaining: " + swingCountRemaining + 
+                    "\nTotal Swings Taken: " + numberOfSwingsTaken + 
+                    "\nNumber of Hits: " + NumberOfFairHits + 
+                    "\nNumber of Foul Balls: " + numberOfFoulHits + 
+                    "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3") +
+                    "\nNumber of Hits in a Row: " + NewPitchersScript.HitsInARow);
             }
         }
         else
@@ -136,7 +163,13 @@ public class UIScript : MonoBehaviour {
             }
             else
             {
-                OverallStats.text = ("Swings Remaining: " + swingCountRemaining + "\nTotal Swings Taken: " + numberOfSwingsTaken + "\nNumber of Hits: " + NumberOfFairHits + "\nNumber of Foul Balls: " + numberOfFoulHits + "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3"));
+                OverallStats.text = (
+                    //"Swings Remaining: " + swingCountRemaining + 
+                    "\nTotal Swings Taken: " + numberOfSwingsTaken + 
+                    "\nNumber of Hits: " + NumberOfFairHits + 
+                    "\nNumber of Foul Balls: " + numberOfFoulHits + 
+                    "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3") + 
+                    "\nNumber of Hits in a Row: " + NewPitchersScript.HitsInARow);
             }
         }
 
