@@ -120,7 +120,6 @@ public class NewPitchersScript : MonoBehaviour {
             m_PitcherPlayer.GetComponent<Animation>().Play(name);
             yield return new WaitForSeconds(1f);
             ballClone = Instantiate(ballPrefab) as Rigidbody;
-            UIScript.PitchNumer++;
             pitchRandomizer = Random.Range(1,6);
             if (pitchMode == "Balls & Strikes")
             {

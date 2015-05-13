@@ -19,7 +19,9 @@ public class UIScript : MonoBehaviour {
     public GameObject mainMenuCanvasHolder;
     public Canvas mainMenuCanvasHolder2;
     public Canvas winningTextUI;
-    private static int pitchNumber;
+    private string levelInstructions;
+    private string controllerInstructions;
+
 
 
 
@@ -65,18 +67,6 @@ public class UIScript : MonoBehaviour {
         }
     }
 
-    public static int PitchNumer
-    {
-        get
-        {
-            return pitchNumber;
-        }
-        set
-        {
-            pitchNumber = value;
-        }
-    }
-
     public void perfectPitch()
     {
         NewPitchersScript.PitchMode = "Perfect";
@@ -97,12 +87,9 @@ public class UIScript : MonoBehaviour {
     // Use this for initialization
 	void Start () 
     {
-        //mainMenuCanvasHolder = mainMenuCanvasHolder.GetComponentInChildren<GameObject>();
-        //mainMenuCanvasHolder.GetComponentInChildren<GameObject>().SetActive(false);
         mainMenuCanvasHolder2 = mainMenuCanvasHolder2.GetComponent<Canvas>();
         mainMenuCanvasHolder2.enabled = false;
         winningTextUI.enabled = false;
-        //mainMenuCanvasHolder.GetComponentInChildren<Canvas>().enabled = false;
         if (mainCamera.gameObject.activeSelf == false)
             MainCameraPresent = false;
         else
@@ -116,8 +103,11 @@ public class UIScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        if(NewPitchersScript.HitsInARow == NewPitchersScript.numberOfHitsInARowToCompleteLevel )
+        if (NewPitchersScript.HitsInARow == NewPitchersScript.numberOfHitsInARowToCompleteLevel)
+        {
             winningTextUI.enabled = true;
+            //StartCoroutine("LoadNextLevel");
+        }
         swingCountRemaining = totalStartingSwings - numberOfSwingsTaken;
         numberOfFoulHits = NumberOfHits - NumberOfFairHits;
         if (numberOfSwingsTaken != 0)
@@ -136,19 +126,13 @@ public class UIScript : MonoBehaviour {
             }
             if (hasPlayerPressedY == false)
             {
-                OverallStats.text = ("Press Y to start\nPress A to swing");
+                OverallStats.text = IntroScoreBoardText();
                 if (Input.GetButtonDown("Button Y"))
                     hasPlayerPressedY = true;
             }
             else
             {
-                OverallStats.text = (
-                    //"Swings Remaining: " + swingCountRemaining + 
-                    "\nTotal Swings Taken: " + numberOfSwingsTaken + 
-                    "\nNumber of Hits: " + NumberOfFairHits + 
-                    "\nNumber of Foul Balls: " + numberOfFoulHits + 
-                    "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3") +
-                    "\nNumber of Hits in a Row: " + NewPitchersScript.HitsInARow);
+                OverallStats.text = ScoreBoardText();
             }
         }
         else
@@ -157,21 +141,43 @@ public class UIScript : MonoBehaviour {
                 mainMenuCanvasHolder2.enabled = !mainMenuCanvasHolder2.enabled;
             if (hasPlayerPressedY == false)
             {
-                OverallStats.text = ("Press S to start\nPress B to swing");
+                OverallStats.text = IntroScoreBoardText();
                 if (Input.GetKeyDown(KeyCode.S))
                     hasPlayerPressedY = true;
             }
             else
             {
-                OverallStats.text = (
-                    //"Swings Remaining: " + swingCountRemaining + 
-                    "\nTotal Swings Taken: " + numberOfSwingsTaken + 
-                    "\nNumber of Hits: " + NumberOfFairHits + 
-                    "\nNumber of Foul Balls: " + numberOfFoulHits + 
-                    "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3") + 
-                    "\nNumber of Hits in a Row: " + NewPitchersScript.HitsInARow);
+                OverallStats.text = ScoreBoardText();
             }
         }
 
 	}
+
+
+
+    public string ScoreBoardText()
+    {
+        //"Swings Remaining: " + swingCountRemaining + 
+        return (
+        "\nTotal Swings Taken: " + numberOfSwingsTaken + 
+        "\nNumber of Hits: " + NumberOfFairHits + 
+        "\nNumber of Foul Balls: " + numberOfFoulHits + 
+        "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3") + 
+        "\nNumber of Hits in a Row: " + NewPitchersScript.HitsInARow);
+    }
+
+    public string IntroScoreBoardText()
+    {
+        levelInstructions = "Level 1: Get 5 hits in a Row";
+        if (UIScript.MainCameraPresent == false)
+            controllerInstructions = "\nPress Y to start\nPress A to swing";
+        else
+            controllerInstructions = "\nPress S to start\nPress B to swing";
+        return (levelInstructions + controllerInstructions);
+    }
+    //IEnumerator LoadNextLevel()
+    //{
+    //    yield return new WaitForSeconds(3f);
+    //    Application.LoadLevel(1);
+    //}
 }
