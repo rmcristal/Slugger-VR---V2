@@ -60,14 +60,30 @@ public class UIScript : MonoBehaviour {
         }
     }
 
- 
+    public void perfectPitch()
+    {
+        NewPitchersScript.PitchMode = "Perfect";
+    }
+
+    public void BallsAndStrikes()
+     {
+         NewPitchersScript.PitchMode = "Balls & Strikes";
+     }
+
+    public void CurveBalls()
+    {
+        NewPitchersScript.PitchMode = "Curve Ball";
+    }
+
+
+
     // Use this for initialization
 	void Start () 
     {
         //mainMenuCanvasHolder = mainMenuCanvasHolder.GetComponentInChildren<GameObject>();
         //mainMenuCanvasHolder.GetComponentInChildren<GameObject>().SetActive(false);
         mainMenuCanvasHolder2 = mainMenuCanvasHolder2.GetComponent<Canvas>();
-        mainMenuCanvasHolder2.enabled = false;
+        mainMenuCanvasHolder2.enabled = true;
         //mainMenuCanvasHolder.GetComponentInChildren<Canvas>().enabled = false;
         if (mainCamera.gameObject.activeSelf == false)
             MainCameraPresent = false;
@@ -93,18 +109,8 @@ public class UIScript : MonoBehaviour {
             hitsPerSwingBattingAvg = 0;
         if (UIScript.MainCameraPresent == false)
         {
-            if (mainMenuEnabled == false && Input.GetButtonDown("Select"))
-            {
-                mainMenuEnabled = true;
-                mainMenuCanvasHolder2.enabled = true;
-                //mainMenuCanvasHolder.SetActive(true);
-            }
-            if (mainMenuEnabled == true && Input.GetButtonDown("Select"))
-            {
-                mainMenuEnabled = false;
-                mainMenuCanvasHolder2.enabled = false;
-                //mainMenuCanvasHolder.SetActive(false);
-            }
+            if (Input.GetButtonDown("Select"))
+                mainMenuCanvasHolder2.enabled = !mainMenuCanvasHolder2.enabled;
 
             if (hasPlayerPressedY == false)
             {
@@ -119,18 +125,8 @@ public class UIScript : MonoBehaviour {
         }
         else
         {
-            if (mainMenuCanvasHolder2.enabled == false && Input.GetKey(KeyCode.M))
-            {
-                mainMenuEnabled = true;
-                mainMenuCanvasHolder2.enabled = true;
-                //mainMenuCanvasHolder.SetActive(true);
-            }
-            if (mainMenuCanvasHolder2.enabled == true && Input.GetKey(KeyCode.M))
-            {
-                mainMenuEnabled = false;
-                mainMenuCanvasHolder2.enabled = false;
-                //mainMenuCanvasHolder.SetActive(false);
-            }
+            if (Input.GetKeyDown(KeyCode.M))
+                mainMenuCanvasHolder2.enabled = !mainMenuCanvasHolder2.enabled;
             if (hasPlayerPressedY == false)
             {
                 OverallStats.text = ("Press S to start\nPress B to swing");

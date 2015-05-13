@@ -11,15 +11,26 @@ public class NewPitchersScript : MonoBehaviour {
     private float randomWait;
     private float animationWaitTime;
     private int pitchRandomizer;
-    private string pitchMode = "Perfect"; //Can choose from "Perfect", "No", or "Curve Ball"
+    private static string pitchMode = "Perfect"; //Can choose from "Perfect", "Balls & Strikes", or "Curve Ball"
     public int regularPitchSpeed = 1440;
     private float amountOfCurve = 15f;
     public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
-    
-    
 
 
 
+
+
+    public static string PitchMode
+    {
+        get
+        {
+            return pitchMode;
+        }
+        set
+        {
+            pitchMode = value;
+        }
+    }
 
 
 
@@ -79,7 +90,13 @@ public class NewPitchersScript : MonoBehaviour {
                 started = true;
             }
         }
+        if(Input.GetButtonDown("Button X"))
+        {
+
+        }
     }
+
+ 
 
 
     IEnumerator PlayAni(string name)
@@ -90,7 +107,7 @@ public class NewPitchersScript : MonoBehaviour {
             yield return new WaitForSeconds(1f);
             ballClone = Instantiate(ballPrefab) as Rigidbody;
             pitchRandomizer = Random.Range(1,6);
-            if (pitchMode == "No")
+            if (pitchMode == "Balls & Strikes")
             {
                 if (pitchRandomizer == 2)
                 {
