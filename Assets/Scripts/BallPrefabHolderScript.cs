@@ -12,6 +12,7 @@ public class BallPrefabHolderScript : MonoBehaviour {
     public ParticleSystem fireWorksPrefab;
     private ParticleSystem clone;
     private ParticleSystem clone2;
+    private bool hasHitGround = false;
 
 	// Use this for initialization
 	void Start () {
@@ -42,6 +43,8 @@ public class BallPrefabHolderScript : MonoBehaviour {
         {
             Destroy(GetComponent<Collider>());
         }
+        if (collision.gameObject.tag == "Ground")
+            hasHitGround = true;
 
 	}
 
@@ -72,7 +75,7 @@ public class BallPrefabHolderScript : MonoBehaviour {
             ball = true;
             Debug.Log("Ball");
         }
-        if(other.gameObject.tag == "Homerun")
+        if(other.gameObject.tag == "Homerun" && hasHitGround == false)
         {
             clone = Instantiate(fireWorksPrefab, new Vector3(14.5f, 4.3f, 18.5f), Quaternion.Euler(-90f,0f,0f)) as ParticleSystem;
             clone2 = Instantiate(fireWorksPrefab, new Vector3(-14.18f, 4.3f, 18.5f), Quaternion.Euler(-90f, 0f, 0f)) as ParticleSystem;

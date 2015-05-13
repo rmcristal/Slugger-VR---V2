@@ -110,8 +110,9 @@ public class UIScript : MonoBehaviour {
         if (UIScript.MainCameraPresent == false)
         {
             if (Input.GetButtonDown("Select"))
+            {
                 mainMenuCanvasHolder2.enabled = !mainMenuCanvasHolder2.enabled;
-
+            }
             if (hasPlayerPressedY == false)
             {
                 OverallStats.text = ("Press Y to start\nPress A to swing");
