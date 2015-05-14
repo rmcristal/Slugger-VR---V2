@@ -13,10 +13,13 @@ public class BallPrefabHolderScript : MonoBehaviour {
     private ParticleSystem clone;
     private ParticleSystem clone2;
     private bool hasHitGround = false;
+    private AudioSource hittingBatSound;
+
+
 
 	// Use this for initialization
 	void Start () {
-
+        hittingBatSound = GetComponent<AudioSource>();
         
 	}
 	
@@ -38,6 +41,7 @@ public class BallPrefabHolderScript : MonoBehaviour {
             UIScript.NumberOfHits++;
             Debug.Log(UIScript.NumberOfHits);
             StartCoroutine("DestroyBallScript");
+            hittingBatSound.Play();
         }
         if(collision.gameObject.tag == "Ground" && firstBatHit == false)
         {
@@ -45,10 +49,8 @@ public class BallPrefabHolderScript : MonoBehaviour {
         }
         if (collision.gameObject.tag == "Ground")
             hasHitGround = true;
-
 	}
-
-
+    
 
     void OnTriggerEnter(Collider other)
     {

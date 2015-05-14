@@ -15,12 +15,14 @@ public class UIScript : MonoBehaviour {
     private static bool mainCameraPresent;
     public GameObject mainCamera;
     private bool hasPlayerPressedY = false;
-    private bool mainMenuEnabled = false;
-    public GameObject mainMenuCanvasHolder;
-    public Canvas mainMenuCanvasHolder2;
+    public static bool mainMenuEnabled = false;
+    public Canvas mainMenuCanvasHolder;
     public Canvas winningTextUI;
     private string levelInstructions;
     private string controllerInstructions;
+    
+
+
 
 
 
@@ -87,8 +89,9 @@ public class UIScript : MonoBehaviour {
     // Use this for initialization
 	void Start () 
     {
-        mainMenuCanvasHolder2 = mainMenuCanvasHolder2.GetComponent<Canvas>();
-        mainMenuCanvasHolder2.enabled = false;
+        mainMenuCanvasHolder = mainMenuCanvasHolder.GetComponent<Canvas>();
+        mainMenuCanvasHolder.enabled = false;
+        mainMenuEnabled = false;
         winningTextUI.enabled = false;
         if (mainCamera.gameObject.activeSelf == false)
             MainCameraPresent = false;
@@ -122,7 +125,21 @@ public class UIScript : MonoBehaviour {
         {
             if (Input.GetButtonDown("Select"))
             {
-                mainMenuCanvasHolder2.enabled = !mainMenuCanvasHolder2.enabled;
+                mainMenuCanvasHolder.enabled = !mainMenuCanvasHolder.enabled;
+                if (mainMenuCanvasHolder.enabled == true)
+                {
+                    mainMenuEnabled = true;
+                    if (Input.GetButtonDown("Button X"))
+                        perfectPitch();
+                    else if (Input.GetButtonDown("Button A"))
+                        BallsAndStrikes();
+                    else if (Input.GetButtonDown("Button B"))
+                        CurveBalls();
+                }
+                else
+                    mainMenuEnabled = false;
+
+
             }
             if (hasPlayerPressedY == false)
             {
@@ -138,7 +155,7 @@ public class UIScript : MonoBehaviour {
         else
         {
             if (Input.GetKeyDown(KeyCode.M))
-                mainMenuCanvasHolder2.enabled = !mainMenuCanvasHolder2.enabled;
+                mainMenuCanvasHolder.enabled = !mainMenuCanvasHolder.enabled;
             if (hasPlayerPressedY == false)
             {
                 OverallStats.text = IntroScoreBoardText();

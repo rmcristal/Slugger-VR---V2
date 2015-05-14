@@ -20,27 +20,31 @@ public class HitPlayer : MonoBehaviour {
 		//m_HelpText.text=m_HelpText.text.Replace("\\","\n");
 		//m_HitPlayer.GetComponent<Animation>()["idle"].wrapMode=WrapMode.Loop;
 		//m_HitPlayer.GetComponent<Animation>().Play("idle");
-        
+        Debug.Log("HitPlayer is attached to this gameObject:" + this.gameObject);
 	}
 
 	
+
+
+
+
 	// Update is called once per frame
     void Update()
     {
         if (bEnd)
         {
-            if (UIScript.MainCameraPresent == false)
+            if (UIScript.MainCameraPresent == false && UIScript.mainMenuEnabled == false)
             {
-                if (Input.GetButtonDown("Button A"))
-                {
-                    bEnd = false;
-                    StartCoroutine("PlayAni", "hit - Trying to Make the Swing Faster");
-                    //swingCountRemaining -= 1;
-                    UIScript.numberOfSwingsTaken++;
-                    StartCoroutine("HitsInARowCoroutine");
-                    //UIText.text = ("Swings Remaining: " + swingCountRemaining + "\nNumber of Hits: " + numberOfFairHitsLocal);
-                    return;
-                }
+                    if (Input.GetButtonDown("Button A"))
+                    {
+                        bEnd = false;
+                        StartCoroutine("PlayAni", "hit - Trying to Make the Swing Faster");
+                        //swingCountRemaining -= 1;
+                        UIScript.numberOfSwingsTaken++;
+                        StartCoroutine("HitsInARowCoroutine");
+                        //UIText.text = ("Swings Remaining: " + swingCountRemaining + "\nNumber of Hits: " + numberOfFairHitsLocal);
+                        return;
+                    }
             }
             else
             {
