@@ -11,15 +11,13 @@ public class NewPitchersScript : MonoBehaviour {
     private float randomWait;
     private float animationWaitTime;
     private int pitchRandomizer;
-    private static string pitchMode = "Perfect"; //Can choose from "Perfect", "Balls & Strikes", or "Curve Ball"
+    private static string pitchMode = "Curve Ball"; //Can choose from "Perfect", "Balls & Strikes", or "Curve Ball"
     public int regularPitchSpeed = 1440;
-    private float amountOfCurve = 150f;
+    private float amountOfCurve = 1.2f;
     public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
     private static int hitsInARow = 0;
     public static int numberOfHitsInARowToCompleteLevel = 10;
 
-
-    
     public static string PitchMode
     {
         get
@@ -45,11 +43,7 @@ public class NewPitchersScript : MonoBehaviour {
         }
     }
 
-
     
-   
-
-
 
 
     public GameObject m_PitcherPlayer = null;
@@ -127,10 +121,12 @@ public class NewPitchersScript : MonoBehaviour {
             }
             else if (PitchMode == "Curve Ball")
             {
-                regularPitchVector3 = new Vector3(.2f, -.2f, 1f);
+                regularPitchVector3 = new Vector3(.14f, -.27f, 1f);
                 pitchSpeed = regularPitchSpeed - 0;
-                //StartCoroutine("CurveBallMovement");
+                StartCoroutine("CurveBallMovement");
             }
+
+
 
 
 
@@ -145,16 +141,13 @@ public class NewPitchersScript : MonoBehaviour {
     }
 
 
-
-
-
     IEnumerator CurveBallMovement()
     {
-        
-        yield return new WaitForEndOfFrame();
+        float startTime = Time.time;
+        while(Time.time - startTime < 1.2f)
         {			
-            ballClone.AddForce(((-amountOfCurve) * (transform.forward)) * Time.deltaTime);
-            ballClone.AddForce(((-amountOfCurve) * (transform.up)) * Time.deltaTime);
+            ballClone.AddForce(((-amountOfCurve) * (transform.forward)));
+            ballClone.AddForce(((-amountOfCurve) * (transform.up)));
             yield return new WaitForEndOfFrame();
         }
     }
