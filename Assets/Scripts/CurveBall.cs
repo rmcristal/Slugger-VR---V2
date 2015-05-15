@@ -18,7 +18,7 @@ class CurveBall : MonoBehaviour
 
     void Update()
     {
-        if (Time.time - startTime < 1.3f)
+        if (Time.time - startTime < 1.1f)
         {
             rigidBody.AddForce(((-amountOfCurve) * (pitcher.forward))*Time.deltaTime);
             rigidBody.AddForce(((-amountOfCurve) * (pitcher.up))*Time.deltaTime);

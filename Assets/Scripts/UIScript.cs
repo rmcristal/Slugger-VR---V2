@@ -69,19 +69,27 @@ public class UIScript : MonoBehaviour {
         }
     }
 
-    public void perfectPitch()
+
+
+    public void PerfectPitch()
     {
         NewPitchersScript.PitchMode = "Perfect";
+        mainMenuCanvasHolder.enabled = !mainMenuCanvasHolder.enabled;
+        mainMenuEnabled = false;
     }
 
     public void BallsAndStrikes()
      {
          NewPitchersScript.PitchMode = "Balls & Strikes";
+         mainMenuCanvasHolder.enabled = !mainMenuCanvasHolder.enabled;
+         mainMenuEnabled = false;
      }
 
     public void CurveBalls()
     {
         NewPitchersScript.PitchMode = "Curve Ball";
+        mainMenuCanvasHolder.enabled = !mainMenuCanvasHolder.enabled;
+        mainMenuEnabled = false;
     }
 
 
@@ -121,26 +129,29 @@ public class UIScript : MonoBehaviour {
         
         else
             hitsPerSwingBattingAvg = 0;
-        if (UIScript.MainCameraPresent == false)
+        if (true) //(MainCameraPresent == false)
         {
-            if (Input.GetButtonDown("Select"))
+            if (Input.GetButtonDown("Select")) // Input.GetButtonDown("Select")) // Input.GetKeyDown(KeyCode.M)) 
             {
                 mainMenuCanvasHolder.enabled = !mainMenuCanvasHolder.enabled;
-                if (mainMenuCanvasHolder.enabled == true)
-                {
-                    mainMenuEnabled = true;
-                    if (Input.GetButtonDown("Button X"))
-                        perfectPitch();
-                    else if (Input.GetButtonDown("Button A"))
-                        BallsAndStrikes();
-                    else if (Input.GetButtonDown("Button B"))
-                        CurveBalls();
-                }
-                else
-                    mainMenuEnabled = false;
-
-
+                mainMenuEnabled = !mainMenuEnabled;
             }
+            if (mainMenuCanvasHolder.enabled == true)
+            {
+                //Debug.Log("mainMenuCanvasHolder is enabled");
+                mainMenuEnabled = true;
+                if (Input.GetButtonDown("Button X")) // Input.GetButtonDown("Button X"))
+                    PerfectPitch();
+                else if (Input.GetButtonDown("Button A"))
+                    BallsAndStrikes();
+                else if (Input.GetButtonDown("Button B"))
+                    CurveBalls();
+            }
+            else
+                mainMenuEnabled = false;
+
+
+            
             if (hasPlayerPressedY == false)
             {
                 OverallStats.text = IntroScoreBoardText();
@@ -169,6 +180,10 @@ public class UIScript : MonoBehaviour {
         }
 
 	}
+
+
+
+
 
 
 
