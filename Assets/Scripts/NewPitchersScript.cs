@@ -72,7 +72,7 @@ public class NewPitchersScript : MonoBehaviour {
         randomWait = Random.Range(1f, 1.5f);
         if (UIScript.MainCameraPresent == false)
         {
-            if (started == false && Input.GetKeyDown(KeyCode.S))// Input.GetButtonDown("Button Y"))
+            if (started == false && Input.GetButtonDown("Button Y"))//Input.GetButtonDown("Button Y")) //Input.GetKeyDown(KeyCode.S))
             {
                 if (bEnd)
                 {

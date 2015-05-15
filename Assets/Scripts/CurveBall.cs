@@ -5,7 +5,7 @@ class CurveBall : MonoBehaviour
 {
     Rigidbody rigidBody;
 
-    private float amountOfCurve = 13.2f;
+    private float amountOfCurve = 300f;
     private float startTime;
 
     public Transform pitcher;
@@ -20,9 +20,8 @@ class CurveBall : MonoBehaviour
     {
         if (Time.time - startTime < 1.3f)
         {
-            //Debug.Log("This code is running");
-            rigidBody.AddForce(((-amountOfCurve) * (pitcher.forward)));
-            rigidBody.AddForce(((-amountOfCurve) * (pitcher.up)));
+            rigidBody.AddForce(((-amountOfCurve) * (pitcher.forward))*Time.deltaTime);
+            rigidBody.AddForce(((-amountOfCurve) * (pitcher.up))*Time.deltaTime);
         }
     }
     
