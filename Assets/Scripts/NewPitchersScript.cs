@@ -13,7 +13,6 @@ public class NewPitchersScript : MonoBehaviour {
     private int pitchRandomizer;
     private static string pitchMode = "Curve Ball"; //Can choose from "Perfect", "Balls & Strikes", or "Curve Ball"
     public int regularPitchSpeed = 1440;
-    private float amountOfCurve = 1.32f;
     public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
     private static int hitsInARow = 0;
     public static int numberOfHitsInARowToCompleteLevel = 10;
@@ -73,7 +72,7 @@ public class NewPitchersScript : MonoBehaviour {
         randomWait = Random.Range(1f, 1.5f);
         if (UIScript.MainCameraPresent == false)
         {
-            if (started == false && Input.GetButtonDown("Button Y"))
+            if (started == false && Input.GetKeyDown(KeyCode.S))// Input.GetButtonDown("Button Y"))
             {
                 if (bEnd)
                 {
@@ -132,8 +131,10 @@ public class NewPitchersScript : MonoBehaviour {
             {
                 regularPitchVector3 = new Vector3(.14f, -.28f, 1f);
                 pitchSpeed = regularPitchSpeed - 0;
-                StartCoroutine("CurveBallMovement");
+                ballClone.GetComponent<CurveBall>().pitcher = transform;
+                ballClone.GetComponent<CurveBall>().enabled = true;
             }
+
             else
             {
                 regularPitchVector3 = new Vector3(0f, -.15f, 1f);
@@ -148,14 +149,5 @@ public class NewPitchersScript : MonoBehaviour {
         }
     }
 
-    IEnumerator CurveBallMovement()
-    {
-        float startTime = Time.time;
-        while(Time.time - startTime < 1.3f)
-        {			
-            ballClone.AddForce(((-amountOfCurve) * (transform.forward)));
-            ballClone.AddForce(((-amountOfCurve) * (transform.up)));
-            yield return null;
-        }
-    }
+
 }

@@ -12,9 +12,9 @@ GameObject:
   - 135: {fileID: 13593178}
   - 23: {fileID: 2393178}
   - 54: {fileID: 5473402}
-  - 114: {fileID: 11435610}
   - 114: {fileID: 11430570}
   - 82: {fileID: 8270922}
+  - 114: {fileID: 11419288}
   m_Layer: 0
   m_Name: BaseBallPrefab
   m_TagString: Untagged
@@ -149,6 +149,17 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &11419288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193178}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1326a85b29459094e8616f21c173db33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11430570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -161,17 +172,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireWorksPrefab: {fileID: 19899984, guid: f91af2ab0621e1f4b8a9c966b8c43cae, type: 2}
---- !u!114 &11435610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 193178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80feb995e05e3c64c9c5461653d0ea53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &13593178
 SphereCollider:
   m_ObjectHideFlags: 1
