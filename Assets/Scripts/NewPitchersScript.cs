@@ -13,10 +13,11 @@ public class NewPitchersScript : MonoBehaviour {
     private int pitchRandomizer;
     private static string pitchMode = "Curve Ball"; //Can choose from "Perfect", "Balls & Strikes", or "Curve Ball"
     public int regularPitchSpeed = 1440;
-    private float amountOfCurve = 1.2f;
+    private float amountOfCurve = 1.32f;
     public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
     private static int hitsInARow = 0;
     public static int numberOfHitsInARowToCompleteLevel = 10;
+
 
     public static string PitchMode
     {
@@ -63,6 +64,12 @@ public class NewPitchersScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+            PitchMode = "Curve Ball";
+        else if (Input.GetKeyDown(KeyCode.P))
+            PitchMode = "Perfect";
+        else if (Input.GetKeyDown(KeyCode.O))
+            PitchMode = "Balls & Strikes";
         randomWait = Random.Range(1f, 1.5f);
         if (UIScript.MainCameraPresent == false)
         {
@@ -103,12 +110,14 @@ public class NewPitchersScript : MonoBehaviour {
     {
         while (HitsInARow < numberOfHitsInARowToCompleteLevel)
         {
+            
             m_PitcherPlayer.GetComponent<Animation>().Play(name);
             yield return new WaitForSeconds(1f);
             ballClone = Instantiate(ballPrefab) as Rigidbody;
             pitchRandomizer = Random.Range(1,6);
             if (PitchMode == "Balls & Strikes")
             {
+                regularPitchVector3 = new Vector3(0f, -.15f, 1f);
                 if (pitchRandomizer == 2)
                 {
                     pitchSpeed = Random.Range(880,920);
@@ -121,16 +130,15 @@ public class NewPitchersScript : MonoBehaviour {
             }
             else if (PitchMode == "Curve Ball")
             {
-                regularPitchVector3 = new Vector3(.14f, -.27f, 1f);
+                regularPitchVector3 = new Vector3(.14f, -.28f, 1f);
                 pitchSpeed = regularPitchSpeed - 0;
                 StartCoroutine("CurveBallMovement");
             }
-
-
-
-
-
-            else pitchSpeed = regularPitchSpeed;
+            else
+            {
+                regularPitchVector3 = new Vector3(0f, -.15f, 1f);
+                pitchSpeed = regularPitchSpeed;
+            }  
             ballClone.AddForce(regularPitchVector3 * -pitchSpeed);
             yield return new WaitForSeconds(m_PitcherPlayer.GetComponent<Animation>()[name].length);
             m_PitcherPlayer.GetComponent<Animation>().Play("idle");
@@ -140,15 +148,14 @@ public class NewPitchersScript : MonoBehaviour {
         }
     }
 
-
     IEnumerator CurveBallMovement()
     {
         float startTime = Time.time;
-        while(Time.time - startTime < 1.2f)
+        while(Time.time - startTime < 1.3f)
         {			
             ballClone.AddForce(((-amountOfCurve) * (transform.forward)));
             ballClone.AddForce(((-amountOfCurve) * (transform.up)));
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
     }
 }

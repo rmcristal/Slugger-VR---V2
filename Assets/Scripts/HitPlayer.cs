@@ -20,7 +20,6 @@ public class HitPlayer : MonoBehaviour {
 		//m_HelpText.text=m_HelpText.text.Replace("\\","\n");
 		//m_HitPlayer.GetComponent<Animation>()["idle"].wrapMode=WrapMode.Loop;
 		//m_HitPlayer.GetComponent<Animation>().Play("idle");
-        Debug.Log("HitPlayer is attached to this gameObject:" + this.gameObject);
 	}
 
 	
@@ -85,7 +84,6 @@ public class HitPlayer : MonoBehaviour {
    void OnCollisionEnter(Collision collision)
     {
         AudioSource.PlayClipAtPoint(hit, new Vector3(0f, 1f, -14f));
-        Debug.Log("There was at least a tip");
 
     }
 
@@ -94,12 +92,10 @@ public class HitPlayer : MonoBehaviour {
        yield return new WaitForSeconds(.7f);
         if((UIScript.NumberOfFairHits + tempAdjusterBetweenSwingsAndFairHits) != UIScript.numberOfSwingsTaken)
         {
-            Debug.Log("The HitsInARowCoroutine in the HitPlayer Script is working");
             NewPitchersScript.HitsInARow = 0;
             tempAdjusterBetweenSwingsAndFairHits = UIScript.numberOfSwingsTaken - UIScript.NumberOfFairHits;
         }
    }
-    
     
 
 }

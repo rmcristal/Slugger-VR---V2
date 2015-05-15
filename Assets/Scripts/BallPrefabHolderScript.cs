@@ -14,6 +14,8 @@ public class BallPrefabHolderScript : MonoBehaviour {
     private ParticleSystem clone2;
     private bool hasHitGround = false;
     private AudioSource hittingBatSound;
+    public static bool okayToStopCurveForce = false;
+    private bool destroyFoulBallIenumoratorHasBeenCalled = false;
 
 
 
@@ -26,7 +28,8 @@ public class BallPrefabHolderScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-	
+        if (hasBeenHit == true || destroyFoulBallIenumoratorHasBeenCalled == true)
+            okayToStopCurveForce = true;
 
 	}
 
@@ -58,9 +61,7 @@ public class BallPrefabHolderScript : MonoBehaviour {
         {
             
             UIScript.NumberOfFairHits++;
-			hasBeenHit = false;
-            //Destroy(gameObject.GetComponent<Collider>());
-            //Debug.Log("I've entered a trigger with the \"new Fair\" tag");   
+            hasBeenHit = false;
         }
         
         if(other.gameObject.tag == "FoulBall")
@@ -81,7 +82,6 @@ public class BallPrefabHolderScript : MonoBehaviour {
         {
             clone = Instantiate(fireWorksPrefab, new Vector3(14.5f, 4.3f, 18.5f), Quaternion.Euler(-90f,0f,0f)) as ParticleSystem;
             clone2 = Instantiate(fireWorksPrefab, new Vector3(-14.18f, 4.3f, 18.5f), Quaternion.Euler(-90f, 0f, 0f)) as ParticleSystem;
-            Debug.Log("Fireworks should be generated");
 
         }
     }
@@ -94,6 +94,7 @@ public class BallPrefabHolderScript : MonoBehaviour {
 
     IEnumerator DestroyFoulBallScript()
     {
+        destroyFoulBallIenumoratorHasBeenCalled = true;
         yield return new WaitForSeconds(4);
         Destroy(gameObject);
     }
