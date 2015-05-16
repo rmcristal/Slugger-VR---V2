@@ -25,6 +25,7 @@ public class UIScript : MonoBehaviour {
     public Canvas gameModeMenuCanvas;
     public static bool gameModeMenuEnabled;
     private int longestHitStreak;
+    public GameObject OVRCameraRig;
     
 
 
@@ -128,6 +129,11 @@ public class UIScript : MonoBehaviour {
             endOfGameTextUI.enabled = true;
             //StartCoroutine("LoadNextLevel");
         }
+        if (endOfGameTextUI.enabled == true && Input.GetButtonDown("Button X"))
+        {
+            OVRCameraRig.transform.rotation = Quaternion.Euler(OVRCameraRig.transform.rotation.x, (OVRCameraRig.transform.rotation.y - 90f), OVRCameraRig.transform.rotation.z);
+            Application.LoadLevel(Application.loadedLevel);
+        }
         swingCountRemaining = totalStartingSwings - numberOfSwingsTaken;
         numberOfFoulHits = NumberOfHits - NumberOfFairHits;
         if (numberOfSwingsTaken != 0)
@@ -135,7 +141,10 @@ public class UIScript : MonoBehaviour {
             hitsPerSwingBattingAvg = (((float)NumberOfFairHits / (float)numberOfSwingsTaken) * 1000f)/1000f;
         }
 
-        
+
+
+
+
         else
             hitsPerSwingBattingAvg = 0;
         if (true) //(MainCameraPresent == false)
@@ -233,9 +242,6 @@ public class UIScript : MonoBehaviour {
         mainMenuEnabled = !mainMenuEnabled;
     }
 
-
-
-
     public string ScoreBoardText()
     {
         //"Swings Remaining: " + swingCountRemaining + 
@@ -250,20 +256,24 @@ public class UIScript : MonoBehaviour {
     public string EndOfGameTextLogic()
     {
         if (gameMode == "Get 7 Hits in a Row")
-            return "5 Hits in a Row!!! \nYou Win!!!";
+            return ("5 Hits in a Row!!! \nYou Win!!!");
         if(gameMode == "Achieve .600 Batting Avg. Over 10 Swings" && hitsPerSwingBattingAvg >= 0.6f)
-            return ("Wow, a " + hitsPerSwingBattingAvg.ToString("F3") + "batting average!!! \nYou Win!!!");
+            return ("Batting average: " + hitsPerSwingBattingAvg.ToString("F3") + "\nYou Win!!!");
         else
-            return ("Batting average: " + hitsPerSwingBattingAvg.ToString("F3") + "\nNot quite there, try again!\n(Need to restart the game)");
+            return ("Batting average: " + hitsPerSwingBattingAvg.ToString("F3") + "\nNot quite there, try again!");
             //Options: "Get 7 Hits in a Row", "Achieve .600 Batting Avg. Over 10 Swings", "Longest Hit Streak" 
     }
+
+
+
+
 
     public string IntroScoreBoardText()
     {
         if (UIScript.MainCameraPresent == false)
         {
-            levelInstructions = "Press Start on your controller to choose Game Mode and Pitch Types";
-            controllerInstructions = "\nPress Y to start\nPress A to swing";
+            levelInstructions = "- Press Start on your controller to \n  choose Game Mode and Pitch Types";
+            controllerInstructions = "\n- Press Y to start\n- Press A to swing";
         }
         else
         {
