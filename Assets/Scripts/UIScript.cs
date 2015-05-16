@@ -12,14 +12,19 @@ public class UIScript : MonoBehaviour {
     public static int swingCountRemaining;
     private float hitsPerSwingBattingAvg;
     public Text OverallStats;
+    public Text EndOfGameText;
     private static bool mainCameraPresent;
     public GameObject mainCamera;
     private bool hasPlayerPressedY = false;
     public static bool mainMenuEnabled = false;
     public Canvas mainMenuCanvasHolder;
-    public Canvas winningTextUI;
+    public Canvas endOfGameTextUI;
     private string levelInstructions;
     private string controllerInstructions;
+    public static string gameMode; //Options: "Get 7 Hits in a Row", "Achieve .600 Batting Avg. Over 10 Swings", "Longest Hit Streak" 
+    public Canvas gameModeMenuCanvas;
+    public static bool gameModeMenuEnabled;
+    private int longestHitStreak;
     
 
 
@@ -94,13 +99,16 @@ public class UIScript : MonoBehaviour {
 
 
 
+
     // Use this for initialization
 	void Start () 
     {
         mainMenuCanvasHolder = mainMenuCanvasHolder.GetComponent<Canvas>();
         mainMenuCanvasHolder.enabled = false;
         mainMenuEnabled = false;
-        winningTextUI.enabled = false;
+        gameModeMenuCanvas.enabled = false;
+        gameModeMenuEnabled = false;
+        endOfGameTextUI.enabled = false;
         if (mainCamera.gameObject.activeSelf == false)
             MainCameraPresent = false;
         else
@@ -114,9 +122,10 @@ public class UIScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        if (NewPitchersScript.HitsInARow == NewPitchersScript.numberOfHitsInARowToCompleteLevel)
+        if (NewPitchersScript.pitchBoolLogic == false)
         {
-            winningTextUI.enabled = true;
+            EndOfGameText.text = EndOfGameTextLogic();
+            endOfGameTextUI.enabled = true;
             //StartCoroutine("LoadNextLevel");
         }
         swingCountRemaining = totalStartingSwings - numberOfSwingsTaken;
@@ -138,7 +147,6 @@ public class UIScript : MonoBehaviour {
             }
             if (mainMenuCanvasHolder.enabled == true)
             {
-                //Debug.Log("mainMenuCanvasHolder is enabled");
                 mainMenuEnabled = true;
                 if (Input.GetButtonDown("Button X")) // Input.GetButtonDown("Button X"))
                     PerfectPitch();
@@ -150,8 +158,42 @@ public class UIScript : MonoBehaviour {
             else
                 mainMenuEnabled = false;
 
+            if (Input.GetButtonDown("Start"))
+            {
+                gameModeMenuCanvas.enabled = !gameModeMenuCanvas.enabled;
+                gameModeMenuEnabled = !gameModeMenuEnabled;
 
-            
+            }
+            if (gameModeMenuCanvas.enabled == true)
+            {
+                //Debug.Log("mainMenuCanvasHolder is enabled");
+                gameModeMenuEnabled = true;
+                if (Input.GetButtonDown("Button X")) // Input.GetButtonDown("Button X"))
+                {
+                    gameMode = "Get 7 Hits in a Row";
+                    gameModeMenuCanvas.enabled = !gameModeMenuCanvas.enabled;
+                    gameModeMenuEnabled = false;
+                    EnableMainMenu();
+                }
+                else if (Input.GetButtonDown("Button A"))
+                {
+                    gameMode = "Achieve .600 Batting Avg. Over 10 Swings";
+                    gameModeMenuCanvas.enabled = !gameModeMenuCanvas.enabled;
+                    gameModeMenuEnabled = false;
+                    EnableMainMenu();
+                }
+                else if (Input.GetButtonDown("Button B"))
+                {
+                    gameMode = "Longest Hit Streak";
+                    gameModeMenuCanvas.enabled = !gameModeMenuCanvas.enabled;
+                    gameModeMenuEnabled = false;
+                    EnableMainMenu();
+                }
+            }
+            else
+                gameModeMenuEnabled = false;
+
+
             if (hasPlayerPressedY == false)
             {
                 OverallStats.text = IntroScoreBoardText();
@@ -161,11 +203,14 @@ public class UIScript : MonoBehaviour {
             else
             {
                 OverallStats.text = ScoreBoardText();
+                OverallStats.fontSize = 15;
             }
+            if (NewPitchersScript.HitsInARow > longestHitStreak)
+                longestHitStreak = NewPitchersScript.HitsInARow;
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.M))
+            if (Input.GetKeyDown(KeyCode.P))
                 mainMenuCanvasHolder.enabled = !mainMenuCanvasHolder.enabled;
             if (hasPlayerPressedY == false)
             {
@@ -182,7 +227,11 @@ public class UIScript : MonoBehaviour {
 	}
 
 
-
+    public void EnableMainMenu()
+    {
+        mainMenuCanvasHolder.enabled = !mainMenuCanvasHolder.enabled;
+        mainMenuEnabled = !mainMenuEnabled;
+    }
 
 
 
@@ -195,16 +244,32 @@ public class UIScript : MonoBehaviour {
         "\nNumber of Hits: " + NumberOfFairHits + 
         "\nNumber of Foul Balls: " + numberOfFoulHits + 
         "\nHits per Swing Batting Avg: " + hitsPerSwingBattingAvg.ToString("F3") + 
-        "\nNumber of Hits in a Row: " + NewPitchersScript.HitsInARow);
+        "\nNumber of Hits in a Row: " + NewPitchersScript.HitsInARow + 
+        "\nLongest Hit Streak: " + longestHitStreak);
+    }
+    public string EndOfGameTextLogic()
+    {
+        if (gameMode == "Get 7 Hits in a Row")
+            return "5 Hits in a Row!!! \nYou Win!!!";
+        if(gameMode == "Achieve .600 Batting Avg. Over 10 Swings" && hitsPerSwingBattingAvg >= 0.6f)
+            return ("Wow, a " + hitsPerSwingBattingAvg.ToString("F3") + "batting average!!! \nYou Win!!!");
+        else
+            return ("Batting average: " + hitsPerSwingBattingAvg.ToString("F3") + "\nNot quite there, try again!\n(Need to restart the game)");
+            //Options: "Get 7 Hits in a Row", "Achieve .600 Batting Avg. Over 10 Swings", "Longest Hit Streak" 
     }
 
     public string IntroScoreBoardText()
     {
-        levelInstructions = "Level 1: Get 5 hits in a Row";
         if (UIScript.MainCameraPresent == false)
+        {
+            levelInstructions = "Press Start on your controller to choose Game Mode and Pitch Types";
             controllerInstructions = "\nPress Y to start\nPress A to swing";
+        }
         else
+        {
+            levelInstructions = "Press G to select Game Mode and Pitch Types.";
             controllerInstructions = "\nPress S to start\nPress B to swing";
+        }
         return (levelInstructions + controllerInstructions);
     }
     //IEnumerator LoadNextLevel()

@@ -32,7 +32,7 @@ public class HitPlayer : MonoBehaviour {
     {
         if (bEnd)
         {
-            if (UIScript.MainCameraPresent == false && UIScript.mainMenuEnabled == false)
+            if (UIScript.MainCameraPresent == false && UIScript.mainMenuEnabled == false && UIScript.gameModeMenuEnabled == false)
             {
                     if (Input.GetButtonDown("Button A"))
                     {

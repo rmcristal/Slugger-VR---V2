@@ -15,7 +15,8 @@ public class NewPitchersScript : MonoBehaviour {
     public int regularPitchSpeed = 1440;
     public Vector3 regularPitchVector3 = new Vector3(0f, 0f, 1f);
     private static int hitsInARow = 0;
-    public static int numberOfHitsInARowToCompleteLevel = 10;
+    public static int numberOfHitsInARowToCompleteLevel = 5;
+    public static bool pitchBoolLogic;
 
 
     public static string PitchMode
@@ -63,12 +64,27 @@ public class NewPitchersScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-            PitchMode = "Curve Ball";
-        else if (Input.GetKeyDown(KeyCode.P))
-            PitchMode = "Perfect";
-        else if (Input.GetKeyDown(KeyCode.O))
-            PitchMode = "Balls & Strikes";
+        if (UIScript.gameMode == "Get 7 Hits in a Row")
+        {
+            if (HitsInARow < numberOfHitsInARowToCompleteLevel)
+                pitchBoolLogic = true;
+            else
+                pitchBoolLogic = false;
+        }
+        else if (UIScript.gameMode == "Achieve .600 Batting Avg. Over 10 Swings")
+        {
+            if (UIScript.numberOfSwingsTaken < 10)
+                pitchBoolLogic = true;
+            else
+                pitchBoolLogic = false;
+        }
+        else
+            pitchBoolLogic = true;
+                //gameMode = "Get 7 Hits in a Row";
+                //else if (Input.GetButtonDown("Button A"))
+                //    gameMode = "Achieve .600 Batting Avg. Over 10 Swings";
+                //else if (Input.GetButtonDown("Button B"))
+                //    gameMode = "Longest Hit Streak";
         randomWait = Random.Range(1f, 1.5f);
         if (UIScript.MainCameraPresent == false)
         {
@@ -96,10 +112,6 @@ public class NewPitchersScript : MonoBehaviour {
                 started = true;
             }
         }
-        if(Input.GetButtonDown("Button X"))
-        {
-
-        }
     }
 
  
@@ -107,7 +119,7 @@ public class NewPitchersScript : MonoBehaviour {
 
     IEnumerator PlayAni(string name)
     {
-        while (HitsInARow < numberOfHitsInARowToCompleteLevel)
+        while (pitchBoolLogic)
         {
             
             m_PitcherPlayer.GetComponent<Animation>().Play(name);
