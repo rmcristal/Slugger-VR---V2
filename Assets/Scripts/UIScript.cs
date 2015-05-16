@@ -268,6 +268,7 @@ public class UIScript : MonoBehaviour {
 
 
 
+
     public string IntroScoreBoardText()
     {
         if (UIScript.MainCameraPresent == false)
